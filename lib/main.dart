@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: CustomRangeSelector(
           width: rangeSelectorWidth,
-          heignt: rangeSelectorHeight,
+          height: rangeSelectorHeight,
           divisions: 10,
           start: startPoint,
           end: endPoint,
