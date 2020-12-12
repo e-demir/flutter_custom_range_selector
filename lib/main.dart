@@ -27,7 +27,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   double startPoint = 0.25;
-
   double endPoint = 0.75;
 
   @override
@@ -36,24 +35,33 @@ class _MyHomePageState extends State<MyHomePage> {
     double rangeSelectorWidth = size.width * 0.75;
     double rangeSelectorHeight = rangeSelectorWidth * 0.25;
     return Scaffold(
-      backgroundColor: Colors.pinkAccent,
+      backgroundColor: Colors.blue,
       body: Center(
-        child: CustomRangeSelector(
-          width: rangeSelectorWidth,
-          height: rangeSelectorHeight,
-          divisions: 10,
-          start: startPoint,
-          end: endPoint,
-          onStartChange: (value){
-            setState(() {
-              startPoint=value;
-            });
-          },
-          onEndChange: (value){
-            setState(() {
-              endPoint=value;
-            });
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CustomRangeSelector(
+              width: rangeSelectorWidth,
+              height: rangeSelectorHeight,
+              divisions: 10,
+              start: startPoint,
+              end: endPoint,
+              onStartChange: (value){
+                setState(() {
+                  startPoint=value;
+                });
+              },
+              onEndChange: (value){
+                setState(() {
+                  endPoint=value;
+                });
+              },
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text("Start : $startPoint || End : $endPoint",style: TextStyle(color: Colors.white, fontSize: 18.0),)
+          ],
         ),
       ),
     );

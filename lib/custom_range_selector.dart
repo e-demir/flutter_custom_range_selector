@@ -28,11 +28,15 @@ class _CustomRangeSelectorState extends State<CustomRangeSelector> {
 
   double barHeight = 0;
   List<Widget> topDividers=[], bottomDividers=[];
+  double startPosition = 0;
+  double endPosition=0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    startPosition = widget.start * widget.width;
+    endPosition = widget.end * widget.width;
     barHeight = widget.height * 0.75;
     double markerDistance = widget.width / widget.divisions;
     List markers = List.generate(widget.divisions-1, (index) => (markerDistance)*(index+1));
@@ -78,7 +82,69 @@ class _CustomRangeSelectorState extends State<CustomRangeSelector> {
                 ...bottomDividers
               ],
             ),
-          )
+          ),
+          Positioned(
+            top: 0,
+            left: startPosition-1,
+            child: Container(
+              width: 2,
+              height: barHeight,
+              color: Colors.red,
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: endPosition -1,
+            child: Container(
+              width: 2,
+              height: barHeight,
+              color: Colors.red,
+            ),
+          ),
+          Positioned(
+              bottom: 0,
+              left: startPosition-10,
+            child: GestureDetector(
+                  onPanUpdate: (panUpdate){
+                    double newPosition = (startPosition + panUpdate.delta.dx).clamp(0.0, widget.width);
+                    if(newPosition<=endPosition-10){
+                      widget.onStartChange(double.parse((newPosition/widget.width).toStringAsFixed(2)));
+                      startPosition=newPosition;
+                    }
+                  },
+                child: Container(
+                  width: 20,
+                  height: widget.height-barHeight,
+                  color: Colors.red,
+                )
+                )
+               ),
+          Positioned(
+              bottom: 0,
+              left: endPosition-10,
+              child: GestureDetector(
+                  onPanUpdate: (panUpdate){
+                    double newPosition = (endPosition + panUpdate.delta.dx).clamp(0.0, widget.width);
+                    if(newPosition>=startPosition+10){
+                      widget.onEndChange(double.parse((newPosition/widget.width).toStringAsFixed(2)));
+                      endPosition=newPosition;
+                    }
+                  },
+                  child: Container(
+                    width: 20,
+                    height: widget.height-barHeight,
+                    color: Colors.red,
+                  )
+              )
+          ),
+          Positioned(
+              top: 0,
+              left: startPosition,
+              child: Container(
+            width: endPosition-startPosition,
+            height: barHeight,
+            color: Colors.deepOrange.withAlpha(100),
+          ))
         ],
       ),
     );
