@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double rangeSelectorWidth = size.width * 0.75;
+    double rangeSelectorHeight = rangeSelectorWidth * 0.25;
     return Scaffold(
       body: Center(
 
